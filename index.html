@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frame Studio | Premium Photography & Videography</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050505;
+      --card: #111111;
+      --gold: #C9A45C;
+      --soft-gold: #E7C873;
+      --white: #F7F3EA;
+      --muted: #A6A6A6;
+      --border: rgba(201,164,92,0.25);
+      --glass: rgba(255,255,255,0.06);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    section {
+      padding: 100px 7%;
+    }
+
+    .section-label {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+      max-width: 720px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 24px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      transition: 0.35s ease;
+      cursor: pointer;
+      background: transparent;
+      color: var(--white);
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--soft-gold));
+      color: #111;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(201,164,92,0.18);
+    }
+
+    header {
+      width: 100%;
+      padding: 22px 7%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      background: rgba(5,5,5,0.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    .mobile-menu {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 150px 7% 90px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 60px;
+      align-items: center;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(201,164,92,0.18), transparent 30%),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08), transparent 25%),
+        #050505;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 7vw, 92px);
+      line-height: 0.98;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 640px;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 38px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 560px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.035);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .stat {
+      padding: 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .stat small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 580px;
+    }
+
+    .photo-frame {
+      position: absolute;
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #242424, #070707);
+      border: 1px solid var(--border);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+    }
+
+    .photo-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,0.7), transparent),
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.14), transparent 35%);
+      z-index: 1;
+    }
+
+    .frame-main {
+      width: 72%;
+      height: 470px;
+      right: 0;
+      top: 20px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .frame-side {
+      width: 42%;
+      height: 260px;
+      left: 0;
+      bottom: 25px;
+      animation: float 7s ease-in-out infinite reverse;
+    }
+
+    .fake-image {
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(135deg, rgba(201,164,92,0.28), transparent),
+        url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .frame-side .fake-image {
+      background-image:
+        linear-gradient(135deg, rgba(201,164,92,0.2), transparent),
+        url("https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=900&q=80");
+    }
+
+    .floating-card {
+      position: absolute;
+      right: 40px;
+      bottom: 35px;
+      z-index: 4;
+      width: 230px;
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(17,17,17,0.82);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+    }
+
+    .floating-card h4 {
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .floating-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    .trust-grid,
+    .portfolio-grid,
+    .service-grid,
+    .process-grid,
+    .testimonial-grid {
+      display: grid;
+      gap: 24px;
+      margin-top: 45px;
+    }
+
+    .trust-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .portfolio-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .service-grid,
+    .process-grid,
+    .testimonial-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 28px;
+      transition: 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: 0.35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border);
+      background: linear-gradient(180deg, rgba(201,164,92,0.09), rgba(255,255,255,0.03));
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: rgba(201,164,92,0.12);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      color: var(--gold);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .portfolio-card {
+      min-height: 330px;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #111;
+      position: relative;
+    }
+
+    .portfolio-img {
+      height: 100%;
+      min-height: 330px;
+      background-size: cover;
+      background-position: center;
+      transition: 0.5s ease;
+    }
+
+    .portfolio-card:hover .portfolio-img {
+      transform: scale(1.08);
+    }
+
+    .portfolio-content {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 24px;
+      background: linear-gradient(to top, rgba(0,0,0,0.92), transparent);
+    }
+
+    .portfolio-content h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .portfolio-content p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .process-card {
+      counter-increment: step;
+    }
+
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+
+    .form-section {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    form {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      padding: 34px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.32);
+      color: var(--white);
+      outline: none;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .check-item input {
+      width: auto;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 22px;
+    }
+
+    .cta {
+      text-align: center;
+      background:
+        radial-gradient(circle at center, rgba(201,164,92,0.18), transparent 42%),
+        #050505;
+    }
+
+    .cta .section-text {
+      margin: 0 auto 32px;
+    }
+
+    footer {
+      padding: 60px 7% 30px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 35px;
+    }
+
+    footer h3,
+    footer h4 {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    footer a {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    footer a:hover {
+      color: var(--gold);
+    }
+
+    .copyright {
+      padding-top: 25px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.7s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      nav,
+      header .btn {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero,
+      .form-section {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 460px;
+      }
+
+      .trust-grid,
+      .portfolio-grid,
+      .service-grid,
+      .process-grid,
+      .testimonial-grid,
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      section {
+        padding: 75px 5%;
+      }
+
+      header {
+        padding: 18px 5%;
+      }
+
+      .hero {
+        padding: 125px 5% 70px;
+      }
+
+      .hero-stats,
+      .trust-grid,
+      .portfolio-grid,
+      .service-grid,
+      .process-grid,
+      .testimonial-grid,
+      .footer-grid,
+      .form-grid,
+      .checkbox-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .frame-main {
+        width: 88%;
+        height: 360px;
+      }
+
+      .frame-side {
+        width: 58%;
+        height: 200px;
+      }
+
+      .floating-card {
+        right: 10px;
+        bottom: 10px;
+        width: 210px;
+      }
+
+      form {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="#" class="logo">Frame <span>Studio</span></a>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#enquiry">Enquiry</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a href="#enquiry" class="btn btn-primary">Plan Your Shoot</a>
+
+    <button class="mobile-menu" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content reveal">
+        <div class="section-label">Premium Photography & Videography</div>
+        <h1>Your Once-in-a-Lifetime Story, Captured With <span>Intention.</span></h1>
+        <p>
+          Premium photography and cinematic videography for weddings, events, maternity,
+          baby showers, pre-wedding stories and corporate moments.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+          <a href="#enquiry" class="btn">Plan My Shoot</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>250+</strong>
+            <small>Stories Captured</small>
+          </div>
+          <div class="stat">
+            <strong>8+</strong>
+            <small>Service Categories</small>
+          </div>
+          <div class="stat">
+            <strong>4 Step</strong>
+            <small>Booking Process</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="photo-frame frame-main">
+          <div class="fake-image"></div>
+        </div>
+
+        <div class="photo-frame frame-side">
+          <div class="fake-image"></div>
+        </div>
+
+        <div class="floating-card">
+          <h4>Qualified Enquiries</h4>
+          <p>Customers share date, location, event type, services and budget before discussion.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="section-label">Lead Qualification System</div>
+      <h2 class="section-title">No More Incomplete Enquiries.</h2>
+      <p class="section-text">
+        Instead of asking only “package kya hai?”, customers can share event type, date,
+        location, services required, budget and delivery preferences in one simple form.
+      </p>
+
+      <div class="trust-grid">
+        <div class="card">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M8 7H16M8 11H16M8 15H12M5 4H19V20L16 18H5V4Z" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <h3>Complete Details</h3>
+          <p>Collect name, date, event type, location, services, budget and delivery preferences.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3V21M5 8H19M7 16H17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Less Back-and-Forth</h3>
+          <p>The photographer gets a proper enquiry message instead of asking questions for 1–2 days.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M4 7L12 3L20 7V17L12 21L4 17V7Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Premium Trust</h3>
+          <p>A professional website makes the photographer look organized, serious and reliable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="reveal">
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-title">Portfolio Crafted Like Stories.</h2>
+      <p class="section-text">
+        Showcase only the strongest work with category-based sections so customers quickly understand your style.
+      </p>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Wedding Stories</h3><p>Rituals, emotions and timeless family moments.</p></div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Pre-Wedding Shoots</h3><p>Cinematic couple portraits with planned concepts.</p></div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Baby Shower</h3><p>Warm, emotional and family-focused celebrations.</p></div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Maternity</h3><p>Elegant memories of a beautiful life stage.</p></div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Corporate Events</h3><p>Professional coverage for brands and teams.</p></div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Drone Coverage</h3><p>Aerial perspectives for cinematic storytelling.</p></div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1533422902779-aff35862e462?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Cinematic Films</h3><p>Emotion-led films with premium editing flow.</p></div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="portfolio-img" style="background-image:url('https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="portfolio-content"><h3>Traditional Coverage</h3><p>Complete documentation of every important moment.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="reveal">
+      <div class="section-label">Services</div>
+      <h2 class="section-title">Everything Required For A Complete Shoot.</h2>
+
+      <div class="service-grid">
+        <div class="card"><div class="icon"></div><h3>Photography</h3><p>Candid, traditional and premium portrait coverage for personal and professional events.</p></div>
+        <div class="card"><div class="icon"></div><h3>Videography</h3><p>Cinematic and traditional video coverage with emotional storytelling and clean editing.</p></div>
+        <div class="card"><div class="icon"></div><h3>Drone Coverage</h3><p>Aerial shots for weddings, venues, events and large outdoor celebrations.</p></div>
+        <div class="card"><div class="icon"></div><h3>Wedding Packages</h3><p>Multi-event coverage for engagement, haldi, mehendi, wedding and reception.</p></div>
+        <div class="card"><div class="icon"></div><h3>Event Coverage</h3><p>Birthdays, baby showers, corporate events, family functions and stage programs.</p></div>
+        <div class="card"><div class="icon"></div><h3>Album & Delivery</h3><p>Google Drive, pendrive and album delivery options based on customer requirement.</p></div>
+      </div>
+    </section>
+
+    <section id="process" class="reveal">
+      <div class="section-label">Booking Process</div>
+      <h2 class="section-title">Simple, Clear And Professional.</h2>
+
+      <div class="process-grid">
+        <div class="card process-card"><div class="step-number">01</div><h3>Submit Enquiry</h3><p>Customer fills all important shoot details from the enquiry form.</p></div>
+        <div class="card process-card"><div class="step-number">02</div><h3>Requirement Discussion</h3><p>Photographer understands the event and suggests suitable coverage.</p></div>
+        <div class="card process-card"><div class="step-number">03</div><h3>Package Confirmation</h3><p>Package, deliverables, team size and timeline are finalized clearly.</p></div>
+        <div class="card process-card"><div class="step-number">04</div><h3>Booking Advance</h3><p>The date is confirmed after advance payment and booking confirmation.</p></div>
+      </div>
+    </section>
+
+    <section id="enquiry" class="form-section reveal">
+      <div>
+        <div class="section-label">Plan Your Shoot</div>
+        <h2 class="section-title">Tell Us Your Requirement Before Asking The Package.</h2>
+        <p class="section-text">
+          Fill this form once and your full requirement will be sent directly on WhatsApp in a clean format.
+        </p>
+      </div>
+
+      <form id="enquiryForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="name" required>
+          </div>
+
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="mobile" required>
+          </div>
+
+          <div class="form-group">
+            <label>Event Type</label>
+            <select id="eventType" required>
+              <option value="">Select event</option>
+              <option>Wedding</option>
+              <option>Engagement</option>
+              <option>Pre-Wedding</option>
+              <option>Birthday</option>
+              <option>Baby Shower</option>
+              <option>Maternity</option>
+              <option>Corporate Event</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Event Date</label>
+            <input type="date" id="eventDate" required>
+          </div>
+
+          <div class="form-group">
+            <label>Event Location</label>
+            <input type="text" id="location" required>
+          </div>
+
+          <div class="form-group">
+            <label>Number of Events / Days</label>
+            <input type="text" id="days" required>
+          </div>
+
+          <div class="form-group full">
+            <label>Services Required</label>
+            <div class="checkbox-grid">
+              <label class="check-item"><input type="checkbox" value="Photography"> Photography</label>
+              <label class="check-item"><input type="checkbox" value="Videography"> Videography</label>
+              <label class="check-item"><input type="checkbox" value="Drone"> Drone</label>
+              <label class="check-item"><input type="checkbox" value="Album"> Album</label>
+              <label class="check-item"><input type="checkbox" value="Traditional Coverage"> Traditional Coverage</label>
+              <label class="check-item"><input type="checkbox" value="Cinematic Film"> Cinematic Film</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Estimated Budget</label>
+            <select id="budget" required>
+              <option value="">Select budget</option>
+              <option>Below ₹25,000</option>
+              <option>₹25,000 – ₹50,000</option>
+              <option>₹50,000 – ₹1,00,000</option>
+              <option>Above ₹1,00,000</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Preferred Delivery</label>
+            <select id="delivery" required>
+              <option value="">Select delivery</option>
+              <option>Google Drive</option>
+              <option>Pendrive</option>
+              <option>Album</option>
+              <option>All</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Additional Requirements</label>
+            <textarea id="requirements" placeholder="Tell us anything special about the shoot"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary submit-btn">Send Complete Enquiry On WhatsApp</button>
+      </form>
+    </section>
+
+    <section class="reveal">
+      <div class="section-label">Client Words</div>
+      <h2 class="section-title">Trusted For Important Moments.</h2>
+
+      <div class="testimonial-grid">
+        <div class="card"><h3>Wedding Client</h3><p>“The team captured every ritual beautifully and guided us properly before the event.”</p></div>
+        <div class="card"><h3>Maternity Client</h3><p>“The shoot felt comfortable, premium and very well planned from start to finish.”</p></div>
+        <div class="card"><h3>Corporate Client</h3><p>“Professional coverage, clean delivery and excellent coordination during the event.”</p></div>
+      </div>
+    </section>
+
+    <section class="cta reveal">
+      <div class="section-label">Ready To Begin</div>
+      <h2 class="section-title">Let’s Plan Your Shoot Properly Before We Talk Price.</h2>
+      <p class="section-text">Send your requirement in the right format and get a suitable package suggestion.</p>
+
+      <div class="hero-actions" style="justify-content:center;">
+        <a href="#enquiry" class="btn btn-primary">Fill Enquiry Form</a>
+        <a href="https://wa.me/919999999999" class="btn">WhatsApp Now</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="footer-grid">
+      <div>
+        <h3>Frame Studio</h3>
+        <p>Premium photography and cinematic videography for meaningful celebrations.</p>
+      </div>
+
+      <div>
+        <h4>Services</h4>
+        <a>Wedding Photography</a>
+        <a>Pre-Wedding Shoots</a>
+        <a>Event Photography</a>
+        <a>Drone Coverage</a>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:+919999999999">+91 99999 99999</a>
+        <a href="https://wa.me/919999999999">WhatsApp</a>
+        <a href="#">Instagram</a>
+      </div>
+
+      <div>
+        <h4>Location</h4>
+        <a>Mumbai, Maharashtra</a>
+        <a>Available for destination shoots</a>
+      </div>
+    </div>
+
+    <div class="copyright">
+      © 2026 Frame Studio. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const revealOnScroll = () => {
+      revealElements.forEach((el) => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+          el.classList.add("active");
+        }
+      });
+    };
+
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+
+    document.getElementById("enquiryForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const selectedServices = Array.from(document.querySelectorAll(".check-item input:checked"))
+        .map(item => item.value)
+        .join(", ");
+
+      if (!selectedServices) {
+        alert("Please select at least one service required.");
+        return;
+      }
+
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const eventType = document.getElementById("eventType").value;
+      const eventDate = document.getElementById("eventDate").value;
+      const location = document.getElementById("location").value.trim();
+      const days = document.getElementById("days").value.trim();
+      const budget = document.getElementById("budget").value;
+      const delivery = document.getElementById("delivery").value;
+      const requirements = document.getElementById("requirements").value.trim() || "No additional requirement mentioned";
+
+      const message =
+`Hi, I want to enquire about photography services.
+
+Name: ${name}
+Mobile: ${mobile}
+Event Type: ${eventType}
+Event Date: ${eventDate}
+Location: ${location}
+Number of Events/Days: ${days}
+Services Required: ${selectedServices}
+Budget: ${budget}
+Preferred Delivery: ${delivery}
+Additional Requirements: ${requirements}
+
+Please share suitable package details.`;
+
+      const photographerNumber = "919999999999";
+      const whatsappUrl = `https://wa.me/${photographerNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(whatsappUrl, "_blank");
+    });
+  </script>
+
+</body>
+</html>
