@@ -1,1 +1,27 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Add Expense</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#197653"><link rel="stylesheet" href="styles.css"></head><body><div class="wrap"><section class="top"><small>Separate page</small><h1>Add Expense</h1><p>Add actual money spent today. It compares against your daily planned limit.</p></section><div id="nav-placeholder"></div><section class="grid"><div class="card span-6"><h2>Today’s Actual Expense</h2><p class="sub">Example: extra snacks ₹50, online food ₹100, petrol ₹250.</p><div class="form"><div><label>Name</label><input id="name" placeholder="Food ordering"></div><div><label>Amount</label><input id="amount" type="number" placeholder="100"></div><div><label>Category</label><select id="category"><option value="food">Food</option><option value="snacks">Snacks</option><option value="travel">Travel</option><option value="badHabit">Bad Habit</option><option value="needs">Needs</option><option value="wants">Wants</option><option value="savings">Savings</option><option value="debt">Debt</option></select></div><div><label>Date</label><input id="date" type="date"></div><button class="primary full" onclick="add()">Save Expense</button></div></div><div class="card span-6"><h2>Today’s Entries</h2><div id="list"></div></div></section></div><script src="app.js"></script><script>window.PAGE='expense';fetch('nav.html').then(r=>r.text()).then(h=>document.getElementById('nav-placeholder').innerHTML=h).then(()=>document.querySelector('[data-page=expense]').classList.add('active'));initCommon();function add(){let n=name.value.trim(),a=Number(amount.value),c=category.value,d=date.value||todayISO;if(!n||!a)return alert('Enter name and amount');state.expenses.unshift({id:Date.now(),name:n,amount:a,category:c,date:d});localStorage.setItem('spendwiseDailyV3',JSON.stringify(state));location.reload()}function del(id){state.expenses=state.expenses.filter(e=>e.id!==id);localStorage.setItem('spendwiseDailyV3',JSON.stringify(state));location.reload()}let arr=state.expenses.filter(e=>e.date===todayISO);list.innerHTML=arr.length?arr.map(e=>`<div class="item row"><div><strong>${e.name}</strong><br><small>${e.category} • ${e.date}</small><br><span class="tag tag-blue">${rupee(e.amount)}</span></div><button class="danger" onclick="del(${e.id})">Delete</button></div>`).join(''):'<div class="empty">No expense added today.</div>';if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js');</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Add Expense</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#197653"><link rel="stylesheet" href="styles.css"></head><body><div class="wrap"><section class="top"><small>Dedicated screen</small><h1>Add Expense</h1><p>Add actual money spent today. It compares against your daily planned limit.</p></section><section class="grid"><div class="card span-6"><h2>Today’s Actual Expense</h2><p class="sub">Example: extra snacks ₹50, online food ₹100, petrol ₹250.</p><div class="form"><div><label>Name</label><input id="name" placeholder="Food ordering"></div><div><label>Amount</label><input id="amount" type="number" placeholder="100"></div><div><label>Category</label><select id="category"><option value="food">Food</option><option value="snacks">Snacks</option><option value="travel">Travel</option><option value="badHabit">Bad Habit</option><option value="needs">Needs</option><option value="wants">Wants</option><option value="savings">Savings</option><option value="debt">Debt</option></select></div><div><label>Date</label><input id="date" type="date"></div><button class="primary full" onclick="add()">Save Expense</button></div></div><div class="card span-6"><h2>Today’s Entries</h2><div id="list"></div></div></section></div><script src="app.js"></script><script>
+window.PAGE='expense';
+loadNav();
+initCommon();
+function add(){
+  const n=document.getElementById('name').value.trim();
+  const a=Number(document.getElementById('amount').value);
+  const c=document.getElementById('category').value;
+  const d=document.getElementById('date').value||todayISO;
+  if(!n||!a||a<=0){alert('Enter expense name and valid amount');return;}
+  state.expenses.unshift({id:Date.now(),name:n,amount:a,category:c,date:d});
+  persist();
+  document.getElementById('name').value='';
+  document.getElementById('amount').value='';
+  document.getElementById('date').value=todayISO;
+  renderList();
+  initCommon();
+  alert('Expense saved successfully');
+}
+function del(id){state.expenses=state.expenses.filter(e=>e.id!==id);persist();renderList();initCommon()}
+function renderList(){
+  const arr=state.expenses.filter(e=>e.date===todayISO);
+  const listEl=document.getElementById('list');
+  listEl.innerHTML=arr.length?arr.map(e=>`<div class="item row"><div><strong>${e.name}</strong><br><small>${e.category} • ${e.date}</small><br><span class="tag tag-blue">${rupee(e.amount)}</span></div><button class="danger" onclick="del(${e.id})">Delete</button></div>`).join(''):'<div class="empty">No expense added today.</div>';
+}
+renderList();registerPWA();
+</script></body></html>

@@ -1,1 +1,26 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daily Habits</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#197653"><link rel="stylesheet" href="styles.css"></head><body><div class="wrap"><section class="top"><small>Separate page</small><h1>Daily Habits</h1><p>Set expenses that repeat daily, like smoking, snacks, tea, parking, or food ordering.</p></section><div id="nav-placeholder"></div><section class="grid"><div class="card span-6"><h2>Add Recurring Daily Expense</h2><div class="form"><div><label>Name</label><input id="name" placeholder="Smoking"></div><div><label>Daily Amount</label><input id="amount" type="number" placeholder="30"></div><div><label>Category</label><select id="category"><option value="badHabit">Bad Habit</option><option value="food">Food</option><option value="travel">Travel</option><option value="needs">Needs</option><option value="wants">Wants</option></select></div><div><label>Frequency</label><select id="frequency"><option value="daily">Every day</option><option value="workdays">Only workdays</option></select></div><button class="primary full" onclick="add()">Save Daily Habit</button></div></div><div class="card span-6"><h2>Recurring List</h2><p class="sub">Daily total: <strong id="limit"></strong></p><div id="list"></div></div></section></div><script src="app.js"></script><script>window.PAGE='recurring';fetch('nav.html').then(r=>r.text()).then(h=>document.getElementById('nav-placeholder').innerHTML=h).then(()=>document.querySelector('[data-page=recurring]').classList.add('active'));initCommon();limit.innerText=rupee(dailyLimit());function add(){let n=name.value.trim(),a=Number(amount.value),c=category.value,f=frequency.value;if(!n||!a)return alert('Enter name and daily amount');state.recurring.unshift({id:Date.now(),name:n,amount:a,category:c,frequency:f});localStorage.setItem('spendwiseDailyV3',JSON.stringify(state));location.reload()}function del(id){state.recurring=state.recurring.filter(e=>e.id!==id);localStorage.setItem('spendwiseDailyV3',JSON.stringify(state));location.reload()}list.innerHTML=state.recurring.length?state.recurring.map(e=>`<div class="item row"><div><strong>${e.name}</strong><br><small>${rupee(e.amount)} per day • ${e.category}</small><br><span class="tag tag-orange">${rupee(e.amount*(e.frequency==='workdays'?22:30))}/month</span></div><button class="danger" onclick="del(${e.id})">Delete</button></div>`).join(''):'<div class="empty">No recurring expenses yet.</div>';if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js');</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daily Habits</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#197653"><link rel="stylesheet" href="styles.css"></head><body><div class="wrap"><section class="top"><small>Dedicated screen</small><h1>Daily Habits</h1><p>Set expenses that repeat daily, like smoking, snacks, tea, parking, or food ordering.</p></section><section class="grid"><div class="card span-6"><h2>Add Recurring Daily Expense</h2><div class="form"><div><label>Name</label><input id="name" placeholder="Smoking"></div><div><label>Daily Amount</label><input id="amount" type="number" placeholder="30"></div><div><label>Category</label><select id="category"><option value="badHabit">Bad Habit</option><option value="food">Food</option><option value="travel">Travel</option><option value="needs">Needs</option><option value="wants">Wants</option></select></div><div><label>Frequency</label><select id="frequency"><option value="daily">Every day</option><option value="workdays">Only workdays</option></select></div><button class="primary full" onclick="add()">Save Daily Habit</button></div></div><div class="card span-6"><h2>Recurring List</h2><p class="sub">Daily total: <strong id="limit"></strong></p><div id="list"></div></div></section></div><script src="app.js"></script><script>
+window.PAGE='recurring';
+loadNav();
+initCommon();
+function add(){
+  const n=document.getElementById('name').value.trim();
+  const a=Number(document.getElementById('amount').value);
+  const c=document.getElementById('category').value;
+  const f=document.getElementById('frequency').value;
+  if(!n||!a||a<=0){alert('Enter habit name and valid daily amount');return;}
+  state.recurring.unshift({id:Date.now(),name:n,amount:a,category:c,frequency:f});
+  persist();
+  document.getElementById('name').value='';
+  document.getElementById('amount').value='';
+  renderList();
+  initCommon();
+  alert('Daily habit saved successfully');
+}
+function del(id){state.recurring=state.recurring.filter(e=>e.id!==id);persist();renderList();initCommon()}
+function renderList(){
+  document.getElementById('limit').innerText=rupee(dailyLimit());
+  const listEl=document.getElementById('list');
+  listEl.innerHTML=state.recurring.length?state.recurring.map(e=>`<div class="item row"><div><strong>${e.name}</strong><br><small>${rupee(e.amount)} per day • ${e.category}</small><br><span class="tag tag-orange">${rupee(e.amount*(e.frequency==='workdays'?22:30))}/month</span></div><button class="danger" onclick="del(${e.id})">Delete</button></div>`).join(''):'<div class="empty">No recurring expenses yet.</div>';
+}
+renderList();registerPWA();
+</script></body></html>
