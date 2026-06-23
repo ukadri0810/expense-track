@@ -2,208 +2,191 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MoneyMap - Monthly Expense Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spendwise Daily</title>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, system-ui, sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    :root {
+      --bg: #f3f0e8;
+      --ink: #1f2933;
+      --muted: #6b7280;
+      --card: #fffaf0;
+      --line: #e7dfd0;
+      --green: #1f7a5c;
+      --green-soft: #e7f4ee;
+      --orange: #c96a2b;
+      --orange-soft: #fff1e7;
+      --red: #b42318;
+      --red-soft: #fee4e2;
+      --blue: #245b85;
+      --blue-soft: #e8f2f8;
+      --dark: #18212f;
+    }
 
     body {
-      background: #f5f7fb;
-      color: #111827;
+      background:
+        radial-gradient(circle at top left, rgba(31,122,92,.13), transparent 32%),
+        radial-gradient(circle at top right, rgba(201,106,43,.12), transparent 30%),
+        var(--bg);
+      color: var(--ink);
       padding: 18px;
     }
 
     .app {
-      max-width: 1150px;
+      max-width: 1180px;
       margin: auto;
     }
 
     .hero {
-      background: linear-gradient(135deg, #101828, #1d2939);
+      background: linear-gradient(135deg, #172033, #253246);
       color: white;
-      border-radius: 28px;
-      padding: 28px;
-      margin-bottom: 22px;
-      box-shadow: 0 20px 40px rgba(16,24,40,.18);
+      border-radius: 30px;
+      padding: 30px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+    }
+
+    .hero-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+      position: relative;
+      z-index: 2;
     }
 
     .hero h1 {
-      font-size: clamp(28px, 5vw, 52px);
+      font-size: clamp(32px, 6vw, 56px);
+      letter-spacing: -1.8px;
       margin-bottom: 8px;
     }
 
     .hero p {
-      color: #d0d5dd;
-      max-width: 620px;
+      color: #d7dde7;
       line-height: 1.6;
+      max-width: 620px;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      background: rgba(255,255,255,.12);
+      color: white;
+      margin-bottom: 14px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
+      gap: 16px;
     }
 
     .card {
-      background: white;
-      border-radius: 24px;
+      background: rgba(255,250,240,.86);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--line);
+      border-radius: 26px;
       padding: 22px;
-      box-shadow: 0 10px 30px rgba(15,23,42,.06);
-      border: 1px solid #eef2f7;
+      box-shadow: 0 18px 35px rgba(40, 35, 25, .08);
     }
 
+    .span-3 { grid-column: span 3; }
     .span-4 { grid-column: span 4; }
     .span-5 { grid-column: span 5; }
+    .span-6 { grid-column: span 6; }
     .span-7 { grid-column: span 7; }
+    .span-8 { grid-column: span 8; }
     .span-12 { grid-column: span 12; }
 
-    label {
+    h2 {
+      font-size: 19px;
+      letter-spacing: -.3px;
+      margin-bottom: 5px;
+    }
+
+    .sub {
       font-size: 13px;
-      font-weight: 700;
-      color: #475467;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    label {
       display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: #6b5f4d;
+      font-weight: 900;
       margin-bottom: 8px;
     }
 
     input, select {
       width: 100%;
+      border: 1px solid #d9cfbd;
+      background: #fffdf8;
+      border-radius: 16px;
       padding: 14px;
-      border: 1px solid #d0d5dd;
-      border-radius: 14px;
       font-size: 15px;
+      color: var(--ink);
       outline: none;
-      background: #fff;
     }
 
     input:focus, select:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 4px rgba(37,99,235,.1);
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(31,122,92,.12);
     }
 
     button {
       border: 0;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-weight: 800;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 900;
       cursor: pointer;
-      transition: .2s;
+      transition: .18s ease;
     }
 
-    button:hover { transform: translateY(-1px); }
+    button:hover {
+      transform: translateY(-1px);
+    }
 
     .primary {
-      background: #2563eb;
+      background: var(--green);
       color: white;
-      width: 100%;
-      margin-top: 12px;
+    }
+
+    .secondary {
+      background: #efe7d8;
+      color: #2f2a22;
     }
 
     .danger {
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 9px 12px;
-    }
-
-    .muted {
-      background: #f2f4f7;
-      color: #344054;
-    }
-
-    .metric h2 {
-      font-size: 30px;
-      margin-top: 8px;
-    }
-
-    .metric p { color: #667085; font-size: 14px; }
-
-    .range-row {
-      margin: 16px 0;
-    }
-
-    .range-top {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    input[type="range"] {
-      padding: 0;
-      accent-color: #2563eb;
-    }
-
-    .progress {
-      height: 13px;
-      background: #eef2f7;
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 10px 0;
-    }
-
-    .bar {
-      height: 100%;
-      width: 0%;
-      border-radius: 99px;
-      transition: .4s;
-    }
-
-    .needs { background: #2563eb; }
-    .wants { background: #f97316; }
-    .savings { background: #16a34a; }
-    .debt { background: #7c3aed; }
-
-    .expense-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-height: 390px;
-      overflow: auto;
-      padding-right: 5px;
-    }
-
-    .expense {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      background: #f9fafb;
-      border-radius: 16px;
-      padding: 14px;
-      border: 1px solid #eef2f7;
-    }
-
-    .expense strong { display: block; }
-    .expense small { color: #667085; }
-
-    .insight {
-      padding: 14px;
-      border-radius: 16px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      margin-top: 10px;
-      line-height: 1.5;
-      color: #334155;
-    }
-
-    .score-circle {
-      width: 135px;
-      height: 135px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      margin: 12px auto;
-      background: conic-gradient(#2563eb 0deg, #e5e7eb 0deg);
-    }
-
-    .score-inner {
-      background: white;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 28px;
-      font-weight: 900;
+      background: var(--red-soft);
+      color: var(--red);
+      padding: 9px 11px;
+      font-size: 12px;
     }
 
     .form-grid {
@@ -212,88 +195,319 @@
       gap: 14px;
     }
 
-    .full { grid-column: 1 / -1; }
+    .full {
+      grid-column: 1 / -1;
+    }
 
-    .chip {
-      display: inline-block;
-      padding: 7px 10px;
-      border-radius: 99px;
-      background: #eef2ff;
-      color: #3730a3;
+    .stat h3 {
+      font-size: 29px;
+      letter-spacing: -1px;
+      margin-top: 8px;
+    }
+
+    .stat p {
+      color: var(--muted);
       font-size: 13px;
-      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .meter {
+      height: 13px;
+      background: #e8dfcf;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 12px 0 8px;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      transition: .35s ease;
+    }
+
+    .green { background: var(--green); }
+    .orange { background: var(--orange); }
+    .red { background: var(--red); }
+    .blue { background: var(--blue); }
+
+    .daily-box {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      margin-top: 12px;
+    }
+
+    .daily-row, .item {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .big-number {
+      font-size: clamp(34px, 7vw, 58px);
+      font-weight: 950;
+      letter-spacing: -2px;
+      margin: 8px 0;
+    }
+
+    .good { color: var(--green); }
+    .bad { color: var(--red); }
+    .warn { color: var(--orange); }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 390px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .item {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .item strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .item small {
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      margin-top: 7px;
+    }
+
+    .tag-green { background: var(--green-soft); color: var(--green); }
+    .tag-orange { background: var(--orange-soft); color: var(--orange); }
+    .tag-red { background: var(--red-soft); color: var(--red); }
+    .tag-blue { background: var(--blue-soft); color: var(--blue); }
+
+    .insight {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      line-height: 1.55;
+      color: #3f3a31;
       margin-top: 10px;
     }
 
-    @media(max-width: 850px) {
-      .span-4, .span-5, .span-7 { grid-column: span 12; }
-      .form-grid { grid-template-columns: 1fr; }
+    .range-row {
+      margin-top: 16px;
+    }
+
+    .range-head {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      font-weight: 900;
+    }
+
+    input[type="range"] {
+      padding: 0;
+      accent-color: var(--green);
+    }
+
+    .tabs {
+      display: flex;
+      background: #efe7d8;
+      border-radius: 18px;
+      padding: 5px;
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      flex: 1;
+      background: transparent;
+      color: #6b5f4d;
+      padding: 11px;
+    }
+
+    .tab.active {
+      background: #fffdf8;
+      color: var(--ink);
+      box-shadow: 0 6px 15px rgba(30,25,15,.08);
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 22px;
+      border: 1px dashed #d9cfbd;
+      border-radius: 18px;
+      background: #fffdf8;
+    }
+
+    @media(max-width: 900px) {
+      .span-3, .span-4, .span-5, .span-6, .span-7, .span-8 {
+        grid-column: span 12;
+      }
+
+      .hero-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body {
+        padding: 12px;
+      }
+
+      .hero, .card {
+        border-radius: 22px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="app">
+  <main class="app">
     <section class="hero">
-      <h1>MoneyMap</h1>
-      <p>Plan your salary before it disappears. Set your monthly budget, track daily spending, and see smart money insights instantly.</p>
-      <span class="chip">Stored safely in your browser cache</span>
+      <div class="hero-row">
+        <div>
+          <span class="pill">Daily spending limit + recurring habits tracker</span>
+          <h1>Spendwise Daily</h1>
+          <p>
+            Plan your salary, set your daily lifestyle cost, track real spending, and see how small daily habits affect your monthly savings.
+          </p>
+        </div>
+        <button class="secondary" onclick="resetAll()">Reset Data</button>
+      </div>
     </section>
 
     <section class="grid">
-      <div class="card span-4">
+      <div class="card span-3 stat">
         <label>Monthly Salary</label>
-        <input id="salary" type="number" placeholder="Example: 30000" />
-        <button class="primary" onclick="saveSalary()">Save Salary</button>
+        <input id="salary" type="number" placeholder="30000" oninput="setSalary()" />
+        <h3 id="salaryText">₹0</h3>
+        <p>Your income base for this month.</p>
       </div>
 
-      <div class="card span-4 metric">
-        <p>Total Spent</p>
-        <h2 id="totalSpent">₹0</h2>
+      <div class="card span-3 stat">
+        <p>Today Planned Limit</p>
+        <h3 id="dailyLimitText">₹0</h3>
+        <p>Based on daily recurring expenses.</p>
       </div>
 
-      <div class="card span-4 metric">
-        <p>Balance Left</p>
-        <h2 id="balanceLeft">₹0</h2>
+      <div class="card span-3 stat">
+        <p>Today Actual Spend</p>
+        <h3 id="todaySpendText">₹0</h3>
+        <p>Manual expenses added today.</p>
+      </div>
+
+      <div class="card span-3 stat">
+        <p>Monthly Habit Cost</p>
+        <h3 id="monthlyHabitText">₹0</h3>
+        <p>Daily recurring expenses × 30 days.</p>
+      </div>
+
+      <div class="card span-8">
+        <h2>Daily Spend Meter</h2>
+        <p class="sub">This is the most important section. It tells the user if today’s spending is under control or already crossed.</p>
+
+        <div class="daily-box">
+          <div class="daily-row">
+            <div>
+              <label>Status</label>
+              <div class="big-number" id="dailyStatus">₹0</div>
+              <p id="dailyStatusText" class="sub">Add recurring and daily expenses to see your report.</p>
+            </div>
+            <div style="min-width: 160px; text-align:right;">
+              <span id="dailyBadge" class="tag tag-blue">Not started</span>
+            </div>
+          </div>
+
+          <div class="meter">
+            <div id="dailyMeterBar" class="bar blue"></div>
+          </div>
+
+          <p id="dailyMeterHint" class="sub">Your daily meter will update automatically.</p>
+        </div>
+      </div>
+
+      <div class="card span-4">
+        <h2>Monthly Impact</h2>
+        <p class="sub">Show the user the real result of daily spending.</p>
+        <div id="monthlyImpact"></div>
       </div>
 
       <div class="card span-5">
-        <h2>Budget Split</h2>
+        <h2>Add Recurring Daily Expense</h2>
+        <p class="sub">For fixed daily habits like smoking, snacks, tea, food ordering, parking, petrol.</p>
 
-        <div class="range-row">
-          <div class="range-top"><span>Needs</span><span id="needsPercentText">50%</span></div>
-          <input id="needsPercent" type="range" min="0" max="100" value="50" oninput="updatePercentages()" />
+        <div class="form-grid">
+          <div>
+            <label>Name</label>
+            <input id="recName" placeholder="Smoking, snacks, tea..." />
+          </div>
+
+          <div>
+            <label>Daily Amount</label>
+            <input id="recAmount" type="number" placeholder="30" />
+          </div>
+
+          <div>
+            <label>Category</label>
+            <select id="recCategory">
+              <option value="wants">Wants</option>
+              <option value="needs">Needs</option>
+              <option value="badHabit">Bad Habit</option>
+              <option value="food">Food</option>
+              <option value="travel">Travel</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Frequency</label>
+            <select id="recFrequency">
+              <option value="daily">Every day</option>
+              <option value="workdays">Only workdays</option>
+            </select>
+          </div>
+
+          <button class="primary full" onclick="addRecurring()">Add Daily Recurring</button>
         </div>
-
-        <div class="range-row">
-          <div class="range-top"><span>Wants</span><span id="wantsPercentText">30%</span></div>
-          <input id="wantsPercent" type="range" min="0" max="100" value="30" oninput="updatePercentages()" />
-        </div>
-
-        <div class="range-row">
-          <div class="range-top"><span>Savings</span><span id="savingsPercentText">20%</span></div>
-          <input id="savingsPercent" type="range" min="0" max="100" value="20" oninput="updatePercentages()" />
-        </div>
-
-        <div class="insight" id="percentWarning">Total should be 100%.</div>
       </div>
 
       <div class="card span-7">
-        <h2>Add Daily Expense</h2>
-        <div class="form-grid" style="margin-top:16px;">
+        <h2>Add Today’s Actual Expense</h2>
+        <p class="sub">This is what the user actually spent today. The app compares it with the daily limit.</p>
+
+        <div class="form-grid">
           <div>
             <label>Expense Name</label>
-            <input id="expenseName" placeholder="Petrol, parking, tea, EMI..." />
+            <input id="expName" placeholder="Extra snacks, petrol, online food..." />
           </div>
 
           <div>
             <label>Amount</label>
-            <input id="expenseAmount" type="number" placeholder="Example: 250" />
+            <input id="expAmount" type="number" placeholder="250" />
           </div>
 
           <div>
-            <label>Main Category</label>
-            <select id="expenseCategory">
+            <label>Category</label>
+            <select id="expCategory">
+              <option value="food">Food</option>
+              <option value="snacks">Snacks</option>
+              <option value="travel">Travel</option>
+              <option value="badHabit">Bad Habit</option>
               <option value="needs">Needs</option>
               <option value="wants">Wants</option>
               <option value="savings">Savings</option>
@@ -302,268 +516,448 @@
           </div>
 
           <div>
-            <label>Sub Category</label>
-            <select id="expenseSub">
-              <option>Food</option>
-              <option>Petrol</option>
-              <option>Parking</option>
-              <option>Rent</option>
-              <option>Mobile Recharge</option>
-              <option>Bad Habit</option>
-              <option>Shopping</option>
-              <option>Entertainment</option>
-              <option>EMI</option>
-              <option>Family</option>
-              <option>Emergency</option>
-            </select>
+            <label>Date</label>
+            <input id="expDate" type="date" />
           </div>
 
-          <div class="full">
-            <button class="primary" onclick="addExpense()">Add Expense</button>
-          </div>
+          <button class="primary full" onclick="addExpense()">Add Expense</button>
         </div>
-      </div>
-
-      <div class="card span-4">
-        <h2>Financial Score</h2>
-        <div class="score-circle" id="scoreCircle">
-          <div class="score-inner" id="score">0</div>
-        </div>
-        <div class="insight" id="scoreText">Add salary and expenses to calculate your score.</div>
-      </div>
-
-      <div class="card span-8 span-12">
-        <h2>Category Progress</h2>
-        <div id="categoryProgress"></div>
-      </div>
-
-      <div class="card span-7">
-        <h2>Expense History</h2>
-        <div class="expense-list" id="expenseList" style="margin-top:16px;"></div>
       </div>
 
       <div class="card span-5">
-        <h2>Smart Insights</h2>
+        <h2>Budget Split</h2>
+        <p class="sub">Plan salary using percentage. Daily tracking will show whether user is following the plan.</p>
+
+        <div class="range-row">
+          <div class="range-head">
+            <span>Needs</span>
+            <span id="needsPercentText">50%</span>
+          </div>
+          <input id="needsPercent" type="range" min="0" max="100" value="50" oninput="updateBudget()" />
+        </div>
+
+        <div class="range-row">
+          <div class="range-head">
+            <span>Wants</span>
+            <span id="wantsPercentText">30%</span>
+          </div>
+          <input id="wantsPercent" type="range" min="0" max="100" value="30" oninput="updateBudget()" />
+        </div>
+
+        <div class="range-row">
+          <div class="range-head">
+            <span>Savings</span>
+            <span id="savingsPercentText">20%</span>
+          </div>
+          <input id="savingsPercent" type="range" min="0" max="100" value="20" oninput="updateBudget()" />
+        </div>
+
+        <div id="budgetWarning" class="insight"></div>
+      </div>
+
+      <div class="card span-7">
+        <h2>Budget Progress</h2>
+        <p class="sub">See how much salary is planned and spent in each category.</p>
+        <div id="budgetProgress"></div>
+      </div>
+
+      <div class="card span-6">
+        <div class="tabs">
+          <button id="tabRecurring" class="tab active" onclick="switchTab('recurring')">Recurring</button>
+          <button id="tabExpenses" class="tab" onclick="switchTab('expenses')">Today Expenses</button>
+        </div>
+
+        <div id="listArea"></div>
+      </div>
+
+      <div class="card span-6">
+        <h2>Smart Money Report</h2>
+        <p class="sub">This is where the app feels useful, not just like data entry.</p>
         <div id="insights"></div>
-        <button class="muted" style="width:100%; margin-top:14px;" onclick="resetData()">Reset All Data</button>
       </div>
     </section>
-  </div>
+  </main>
 
   <script>
-    let state = JSON.parse(localStorage.getItem("moneyMap")) || {
+    const todayISO = new Date().toISOString().slice(0, 10);
+
+    let state = JSON.parse(localStorage.getItem("spendwiseDaily")) || {
       salary: 0,
-      percentages: { needs: 50, wants: 30, savings: 20 },
+      budget: {
+        needs: 50,
+        wants: 30,
+        savings: 20
+      },
+      recurring: [],
       expenses: []
     };
 
-    const format = amount => "₹" + Number(amount || 0).toLocaleString("en-IN");
+    let activeTab = "recurring";
+
+    const rupee = (n) => "₹" + Math.round(Number(n || 0)).toLocaleString("en-IN");
 
     function save() {
-      localStorage.setItem("moneyMap", JSON.stringify(state));
+      localStorage.setItem("spendwiseDaily", JSON.stringify(state));
       render();
     }
 
-    function saveSalary() {
-      const salary = Number(document.getElementById("salary").value);
-      if (!salary || salary <= 0) return alert("Please enter a valid salary.");
-      state.salary = salary;
+    function setSalary() {
+      state.salary = Number(document.getElementById("salary").value || 0);
       save();
     }
 
-    function updatePercentages() {
-      state.percentages.needs = Number(document.getElementById("needsPercent").value);
-      state.percentages.wants = Number(document.getElementById("wantsPercent").value);
-      state.percentages.savings = Number(document.getElementById("savingsPercent").value);
+    function updateBudget() {
+      state.budget.needs = Number(document.getElementById("needsPercent").value);
+      state.budget.wants = Number(document.getElementById("wantsPercent").value);
+      state.budget.savings = Number(document.getElementById("savingsPercent").value);
+      save();
+    }
+
+    function addRecurring() {
+      const name = document.getElementById("recName").value.trim();
+      const amount = Number(document.getElementById("recAmount").value);
+      const category = document.getElementById("recCategory").value;
+      const frequency = document.getElementById("recFrequency").value;
+
+      if (!name || !amount || amount <= 0) {
+        alert("Add recurring expense name and valid daily amount.");
+        return;
+      }
+
+      state.recurring.unshift({
+        id: Date.now(),
+        name,
+        amount,
+        category,
+        frequency
+      });
+
+      document.getElementById("recName").value = "";
+      document.getElementById("recAmount").value = "";
+
+      activeTab = "recurring";
       save();
     }
 
     function addExpense() {
-      const name = document.getElementById("expenseName").value.trim();
-      const amount = Number(document.getElementById("expenseAmount").value);
-      const category = document.getElementById("expenseCategory").value;
-      const sub = document.getElementById("expenseSub").value;
+      const name = document.getElementById("expName").value.trim();
+      const amount = Number(document.getElementById("expAmount").value);
+      const category = document.getElementById("expCategory").value;
+      const date = document.getElementById("expDate").value || todayISO;
 
-      if (!name || !amount || amount <= 0) return alert("Please enter expense name and valid amount.");
+      if (!name || !amount || amount <= 0) {
+        alert("Add expense name and valid amount.");
+        return;
+      }
 
       state.expenses.unshift({
         id: Date.now(),
         name,
         amount,
         category,
-        sub,
-        date: new Date().toLocaleDateString("en-IN")
+        date
       });
 
-      document.getElementById("expenseName").value = "";
-      document.getElementById("expenseAmount").value = "";
+      document.getElementById("expName").value = "";
+      document.getElementById("expAmount").value = "";
+      document.getElementById("expDate").value = todayISO;
 
+      activeTab = "expenses";
       save();
     }
 
-    function deleteExpense(id) {
-      state.expenses = state.expenses.filter(e => e.id !== id);
+    function removeRecurring(id) {
+      state.recurring = state.recurring.filter(item => item.id !== id);
       save();
     }
 
-    function getSpent(category) {
+    function removeExpense(id) {
+      state.expenses = state.expenses.filter(item => item.id !== id);
+      save();
+    }
+
+    function getDailyLimit() {
+      return state.recurring.reduce((sum, item) => {
+        if (item.frequency === "workdays") return sum + item.amount;
+        return sum + item.amount;
+      }, 0);
+    }
+
+    function getTodayExpenses() {
       return state.expenses
-        .filter(e => e.category === category)
-        .reduce((sum, e) => sum + e.amount, 0);
+        .filter(item => item.date === todayISO)
+        .reduce((sum, item) => sum + item.amount, 0);
     }
 
-    function calculateScore() {
-      const salary = state.salary;
-      if (!salary) return 0;
-
-      const totalSpent = state.expenses.reduce((sum, e) => sum + e.amount, 0);
-      const wantsSpent = getSpent("wants");
-      const savingsSpent = getSpent("savings");
-
-      let score = 70;
-
-      if (totalSpent > salary) score -= 30;
-      if (wantsSpent > salary * 0.3) score -= 15;
-      if (savingsSpent >= salary * 0.2) score += 20;
-      if (totalSpent < salary * 0.8) score += 10;
-
-      return Math.max(0, Math.min(100, score));
+    function getSpentByCategory(category) {
+      return state.expenses
+        .filter(item => item.category === category)
+        .reduce((sum, item) => sum + item.amount, 0);
     }
 
-    function render() {
-      document.getElementById("salary").value = state.salary || "";
-
-      ["needs", "wants", "savings"].forEach(cat => {
-        document.getElementById(cat + "Percent").value = state.percentages[cat];
-        document.getElementById(cat + "PercentText").innerText = state.percentages[cat] + "%";
-      });
-
-      const totalPercent = state.percentages.needs + state.percentages.wants + state.percentages.savings;
-      const warning = document.getElementById("percentWarning");
-      warning.innerText = totalPercent === 100
-        ? "Perfect. Your salary is fully planned."
-        : `Current total is ${totalPercent}%. Adjust it to 100%.`;
-
-      const totalSpent = state.expenses.reduce((sum, e) => sum + e.amount, 0);
-      document.getElementById("totalSpent").innerText = format(totalSpent);
-      document.getElementById("balanceLeft").innerText = format(state.salary - totalSpent);
-
-      renderProgress();
-      renderExpenses();
-      renderInsights();
-
-      const score = calculateScore();
-      document.getElementById("score").innerText = score;
-      document.getElementById("scoreCircle").style.background =
-        `conic-gradient(#2563eb ${score * 3.6}deg, #e5e7eb 0deg)`;
-
-      document.getElementById("scoreText").innerText =
-        score >= 80 ? "Excellent control. Keep protecting your savings." :
-        score >= 60 ? "Good start. Watch your wants and unnecessary spending." :
-        "Your spending needs attention. Start by reducing small daily leaks.";
+    function getRecurringMonthly() {
+      return state.recurring.reduce((sum, item) => {
+        const days = item.frequency === "workdays" ? 22 : 30;
+        return sum + (item.amount * days);
+      }, 0);
     }
 
-    function renderProgress() {
-      const container = document.getElementById("categoryProgress");
-      const categories = ["needs", "wants", "savings", "debt"];
+    function switchTab(tab) {
+      activeTab = tab;
+      renderLists();
+    }
+
+    function renderDailyMeter() {
+      const limit = getDailyLimit();
+      const today = getTodayExpenses();
+      const diff = today - limit;
+      const percentage = limit ? Math.min((today / limit) * 100, 140) : 0;
+
+      const status = document.getElementById("dailyStatus");
+      const text = document.getElementById("dailyStatusText");
+      const badge = document.getElementById("dailyBadge");
+      const bar = document.getElementById("dailyMeterBar");
+      const hint = document.getElementById("dailyMeterHint");
+
+      bar.style.width = Math.min(percentage, 100) + "%";
+
+      if (!limit && !today) {
+        status.innerText = "₹0";
+        status.className = "big-number";
+        text.innerText = "Add recurring daily expenses to create your daily spend limit.";
+        badge.className = "tag tag-blue";
+        badge.innerText = "Not started";
+        bar.className = "bar blue";
+        hint.innerText = "Example: Smoking ₹30/day + snacks ₹50/day + food ordering ₹100/day.";
+        return;
+      }
+
+      if (today > limit) {
+        status.innerText = rupee(diff);
+        status.className = "big-number bad";
+        text.innerText = "Daily limit crossed. This is the exact extra amount spent today.";
+        badge.className = "tag tag-red";
+        badge.innerText = "Over limit";
+        bar.className = "bar red";
+        hint.innerText = `Today you planned ${rupee(limit)} but spent ${rupee(today)}.`;
+      } else {
+        status.innerText = rupee(limit - today);
+        status.className = "big-number good";
+        text.innerText = "You are still inside today's spending limit.";
+        badge.className = "tag tag-green";
+        badge.innerText = "Under control";
+        bar.className = "bar green";
+        hint.innerText = `Today limit is ${rupee(limit)} and you spent ${rupee(today)}.`;
+      }
+    }
+
+    function renderBudgetProgress() {
+      const container = document.getElementById("budgetProgress");
+      const categories = [
+        { key: "needs", label: "Needs", color: "blue" },
+        { key: "wants", label: "Wants", color: "orange" },
+        { key: "savings", label: "Savings", color: "green" },
+        { key: "debt", label: "Debt", color: "red" }
+      ];
 
       container.innerHTML = categories.map(cat => {
-        const budget = cat === "debt"
+        const budgetAmount = cat.key === "debt"
           ? state.salary * 0.15
-          : state.salary * ((state.percentages[cat] || 0) / 100);
+          : state.salary * ((state.budget[cat.key] || 0) / 100);
 
-        const spent = getSpent(cat);
-        const percent = budget ? Math.min((spent / budget) * 100, 120) : 0;
+        const spent = getSpentByCategory(cat.key);
+        const percent = budgetAmount ? Math.min((spent / budgetAmount) * 100, 100) : 0;
+        const remaining = budgetAmount - spent;
 
         return `
-          <div style="margin-top:18px;">
-            <div class="range-top">
-              <span>${cat.toUpperCase()}</span>
-              <span>${format(spent)} / ${format(budget)}</span>
+          <div class="daily-box">
+            <div class="daily-row">
+              <div>
+                <strong>${cat.label}</strong>
+                <p class="sub">${rupee(spent)} used from ${rupee(budgetAmount)}</p>
+              </div>
+              <span class="tag ${remaining < 0 ? "tag-red" : "tag-blue"}">
+                ${remaining < 0 ? "Over " + rupee(Math.abs(remaining)) : "Left " + rupee(remaining)}
+              </span>
             </div>
-            <div class="progress">
-              <div class="bar ${cat}" style="width:${Math.min(percent,100)}%"></div>
+            <div class="meter">
+              <div class="bar ${remaining < 0 ? "red" : cat.color}" style="width:${percent}%"></div>
             </div>
-            <small>${spent > budget ? "Overspent by " + format(spent - budget) : "Remaining " + format(budget - spent)}</small>
           </div>
         `;
       }).join("");
     }
 
-    function renderExpenses() {
-      const list = document.getElementById("expenseList");
+    function renderLists() {
+      document.getElementById("tabRecurring").classList.toggle("active", activeTab === "recurring");
+      document.getElementById("tabExpenses").classList.toggle("active", activeTab === "expenses");
 
-      if (!state.expenses.length) {
-        list.innerHTML = `<div class="insight">No expenses added yet.</div>`;
-        return;
+      const area = document.getElementById("listArea");
+
+      if (activeTab === "recurring") {
+        if (!state.recurring.length) {
+          area.innerHTML = `<div class="empty">No recurring daily expenses added yet.</div>`;
+          return;
+        }
+
+        area.innerHTML = `
+          <div class="list">
+            ${state.recurring.map(item => `
+              <div class="item">
+                <div>
+                  <strong>${item.name}</strong>
+                  <small>${rupee(item.amount)} per day • ${item.category} • ${item.frequency}</small>
+                  <br/>
+                  <span class="tag tag-orange">${rupee(item.amount * (item.frequency === "workdays" ? 22 : 30))}/month</span>
+                </div>
+                <button class="danger" onclick="removeRecurring(${item.id})">Delete</button>
+              </div>
+            `).join("")}
+          </div>
+        `;
       }
 
-      list.innerHTML = state.expenses.map(e => `
-        <div class="expense">
-          <div>
-            <strong>${e.name}</strong>
-            <small>${e.sub} • ${e.category} • ${e.date}</small>
+      if (activeTab === "expenses") {
+        const todayExpenses = state.expenses.filter(item => item.date === todayISO);
+
+        if (!todayExpenses.length) {
+          area.innerHTML = `<div class="empty">No actual expenses added for today.</div>`;
+          return;
+        }
+
+        area.innerHTML = `
+          <div class="list">
+            ${todayExpenses.map(item => `
+              <div class="item">
+                <div>
+                  <strong>${item.name}</strong>
+                  <small>${item.category} • ${item.date}</small>
+                  <br/>
+                  <span class="tag tag-blue">${rupee(item.amount)}</span>
+                </div>
+                <button class="danger" onclick="removeExpense(${item.id})">Delete</button>
+              </div>
+            `).join("")}
           </div>
-          <div style="text-align:right;">
-            <strong>${format(e.amount)}</strong>
-            <button class="danger" onclick="deleteExpense(${e.id})">Delete</button>
-          </div>
+        `;
+      }
+    }
+
+    function renderMonthlyImpact() {
+      const monthly = getRecurringMonthly();
+      const yearly = monthly * 12;
+
+      document.getElementById("monthlyImpact").innerHTML = `
+        <div class="insight">
+          Your recurring daily habits cost <strong>${rupee(monthly)}</strong> this month.
         </div>
-      `).join("");
+        <div class="insight">
+          Yearly impact becomes <strong>${rupee(yearly)}</strong>.
+        </div>
+        <div class="insight">
+          Reducing only 50% can save around <strong>${rupee(monthly / 2)}</strong> every month.
+        </div>
+      `;
     }
 
     function renderInsights() {
-      const box = document.getElementById("insights");
+      const limit = getDailyLimit();
+      const today = getTodayExpenses();
+      const monthly = getRecurringMonthly();
       const salary = state.salary;
-      const badHabit = state.expenses
-        .filter(e => e.sub === "Bad Habit")
-        .reduce((sum, e) => sum + e.amount, 0);
+      const badHabitMonthly = state.recurring
+        .filter(item => item.category === "badHabit")
+        .reduce((sum, item) => sum + item.amount * (item.frequency === "workdays" ? 22 : 30), 0);
 
-      const petrol = state.expenses
-        .filter(e => e.sub === "Petrol")
-        .reduce((sum, e) => sum + e.amount, 0);
+      const insights = [];
 
-      const wants = getSpent("wants");
-      const savings = getSpent("savings");
-
-      let insights = [];
-
-      if (!salary) insights.push("Enter your salary to unlock smart suggestions.");
-
-      if (badHabit > 0) {
-        insights.push(`Bad habit spending is ${format(badHabit)}. Reducing it by 50% can save ${format(badHabit / 2)} this month.`);
+      if (!salary) {
+        insights.push("Add monthly salary first. Then the app can compare spending with income.");
       }
 
-      if (petrol > salary * 0.12 && salary) {
-        insights.push(`Petrol is taking a high share of your salary. Try tracking weekly fuel usage.`);
+      if (!state.recurring.length) {
+        insights.push("Add fixed daily expenses like smoking, tea, snacks, food ordering, parking or petrol.");
       }
 
-      if (wants > salary * 0.3 && salary) {
-        insights.push(`Wants spending is above 30%. This is where money usually leaks silently.`);
+      if (limit && today > limit) {
+        insights.push(`Today’s daily spend limit is crossed by ${rupee(today - limit)}. If this happens daily, it can become ${rupee((today - limit) * 30)} extra per month.`);
       }
 
-      if (savings >= salary * 0.2 && salary) {
-        insights.push(`Great. You are protecting at least 20% toward savings.`);
+      if (limit && today < limit) {
+        insights.push(`You are under today’s daily limit by ${rupee(limit - today)}. Good control for today.`);
       }
 
-      if (!insights.length) {
-        insights.push("Good start. Add more daily expenses to get useful insights.");
+      if (salary && monthly > salary * 0.25) {
+        insights.push(`Your recurring daily expenses are taking more than 25% of your salary. This needs attention.`);
       }
 
-      box.innerHTML = insights.map(i => `<div class="insight">${i}</div>`).join("");
+      if (badHabitMonthly > 0) {
+        insights.push(`Bad habit cost is ${rupee(badHabitMonthly)} per month. Cutting it by half saves ${rupee(badHabitMonthly / 2)} monthly.`);
+      }
+
+      if (salary && monthly < salary * 0.15 && monthly > 0) {
+        insights.push("Your daily recurring expenses are still manageable compared to salary. Keep tracking actual daily spending.");
+      }
+
+      document.getElementById("insights").innerHTML = insights.map(i => `
+        <div class="insight">${i}</div>
+      `).join("");
     }
 
-    function resetData() {
-      if (!confirm("Reset all cached data?")) return;
-      localStorage.removeItem("moneyMap");
+    function render() {
+      document.getElementById("salary").value = state.salary || "";
+      document.getElementById("salaryText").innerText = rupee(state.salary);
+
+      document.getElementById("needsPercent").value = state.budget.needs;
+      document.getElementById("wantsPercent").value = state.budget.wants;
+      document.getElementById("savingsPercent").value = state.budget.savings;
+
+      document.getElementById("needsPercentText").innerText = state.budget.needs + "%";
+      document.getElementById("wantsPercentText").innerText = state.budget.wants + "%";
+      document.getElementById("savingsPercentText").innerText = state.budget.savings + "%";
+
+      const totalBudget = state.budget.needs + state.budget.wants + state.budget.savings;
+      document.getElementById("budgetWarning").innerHTML =
+        totalBudget === 100
+          ? "Your budget split is balanced at <strong>100%</strong>."
+          : `Your budget split is <strong>${totalBudget}%</strong>. Adjust it to 100%.`;
+
+      const dailyLimit = getDailyLimit();
+      const todaySpend = getTodayExpenses();
+      const monthlyHabit = getRecurringMonthly();
+
+      document.getElementById("dailyLimitText").innerText = rupee(dailyLimit);
+      document.getElementById("todaySpendText").innerText = rupee(todaySpend);
+      document.getElementById("monthlyHabitText").innerText = rupee(monthlyHabit);
+
+      renderDailyMeter();
+      renderBudgetProgress();
+      renderMonthlyImpact();
+      renderInsights();
+      renderLists();
+    }
+
+    function resetAll() {
+      if (!confirm("Delete all saved data from this browser?")) return;
+
+      localStorage.removeItem("spendwiseDaily");
+
       state = {
         salary: 0,
-        percentages: { needs: 50, wants: 30, savings: 20 },
+        budget: {
+          needs: 50,
+          wants: 30,
+          savings: 20
+        },
+        recurring: [],
         expenses: []
       };
+
+      activeTab = "recurring";
       render();
     }
 
+    document.getElementById("expDate").value = todayISO;
     render();
   </script>
 </body>
