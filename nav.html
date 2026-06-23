@@ -1,0 +1,8 @@
+<nav class="bottom-nav">
+  <a href="index.html" data-page="dashboard">Home</a>
+  <a href="expense.html" data-page="expense">Expense</a>
+  <a href="recurring.html" data-page="recurring">Daily</a>
+  <a href="budget.html" data-page="budget">Budget</a>
+  <a href="reports.html" data-page="reports">Report</a>
+</nav>
+<script>document.querySelectorAll('.bottom-nav a').forEach(a=>{if(a.dataset.page===window.PAGE)a.classList.add('active')})</script>
